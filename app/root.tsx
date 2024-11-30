@@ -42,6 +42,7 @@ export default function App() {
   const { contacts, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const submit = useSubmit();
+
   const searching =
     navigation.location &&
     new URLSearchParams(navigation.location.search).has("q");
@@ -68,13 +69,18 @@ export default function App() {
             <Form
               id="search-form"
               role="search"
-              onChange={(e) => submit(e.currentTarget)}
+              onChange={(event) => {
+                const isFirstSearch = q === null;
+                submit(event.currentTarget, {
+                  replace: !isFirstSearch,
+                });
+              }}
             >
               <input
                 id="q"
                 aria-label="Search contacts"
                 placeholder="Search"
-                defaultValue={q || ""}
+                defaultValue={q ?? ""}
                 type="search"
                 name="q"
                 className={searching ? "loading" : ""}
