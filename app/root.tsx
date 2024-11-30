@@ -26,7 +26,7 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
-  const { contacts } = useLoaderData();
+  const { contacts } = useLoaderData<typeof loader>();
 
   return (
     <html lang="en">
